@@ -324,28 +324,28 @@ end
 
 TASK9.3: BASIC eBGP FOR ISPS and R1.
 R1 BGP:
-config t
+conf t
 router bgp 1
- bgp log-neighbor-changes
- neighbor 208.8.8.4 remote-as 45
- neighbor 207.7.7.2 remote-as 2
- neighbor 209.9.9.3 remote-as 3
- network 10.1.1.0 Mask 255.255.255.252
- network 207.7.7.0 mask 255.255.255.0
- network 208.8.8.0 mask 255.255.255.0
- network 209.9.9.0 mask 255.255.255.0
+bgp log neighbor-changes
+neighbor 208.8.8.4 remote-as 45
+neighbor 207.7.7.2 remote-as 2
+neighbor 209.9.9.3 remote-as 3
+network 208.8.8.0 mask 255.255.255.0
+network 207.7.7.0 mask 255.255.255.0
+network 209.9.9.0 mask 255.255.255.0
+network 10.1.1.0 mask 255.255.255.252
 end
 @@@ISP1:
-CONFIG T
+conf t
 router bgp 45
 bgp log-neighbor-changes
-neighbor 24.2.4.2 remote-as 2
 neighbor 45.4.5.5 remote-as 45
+neighbor 24.2.4.2 remote-as 2
 neighbor 208.8.8.1 remote-as 1
-network 208.8.8.0
-network 24.2.4.0 mask 255.255.255.0
-network 44.44.44.44 mask 255.255.255.255
 network 45.4.5.0 mask 255.255.255.0
+network 24.2.4.0 mask 255.255.255.0
+network 208.8.8.0 mask 255.255.255.0
+
 !PretentInternet
 network 0.0.0.0
 ip route 0.0.0.0 0.0.0.0 null 0
@@ -353,53 +353,51 @@ ip route 10.0.0.0 255.0.0.0 208.8.8.1
 end
 
 @@@ISP2:
-config t
+conf t
+no router bgp 45
 router bgp 2
 bgp log-neighbor-changes
-neighbor 24.2.4.4 remote-as 45
 neighbor 25.2.5.5 remote-as 45
 neighbor 32.3.2.3 remote-as 3
+neighbor 24.2.4.4 remote-as 45
 neighbor 207.7.7.1 remote-as 1
-network 207.0.0.0
-network 22.22.22.22 mask 255.255.255.255
-network 24.2.4.0 mask 255.255.255.0
 network 25.2.5.0 mask 255.255.255.0
 network 32.3.2.0 mask 255.255.255.0
-!fakeInternet
+network 24.2.4.0 mask 255.255.255.0
+network  207.7.7.0 mask 255.255.255.0
+
+!PretentInternet
 network 0.0.0.0
 ip route 0.0.0.0 0.0.0.0 null 0
-ip route 10.0.0.0 255.0.0.0 207.7.7.1
+ip route 10.0.0.0 255.0.0.0 208.8.8.1
 end
 @@ISP3:
-CONFIG T
+conf t
 router bgp 3
 bgp log-neighbor-changes
-neighbor 32.3.2.2 remote-as 2
-neighbor 35.3.5.5 remote-as 45
 neighbor 209.9.9.1 remote-as 1
-network 209.9.9.0
-network 32.3.2.0 mask 255.255.255.0
-network 33.33.33.33 mask 255.255.255.255
+neighbor 35.3.5.5 remote-as 45
+neighbor 32.3.2.2 remote-as 2
+network 209.9.9.0 mask 255.255.255.0
 network 35.3.5.0 mask 255.255.255.0
+network 32.3.2.0 mask 255.255.255.0
+
+!PretentInternet
 network 0.0.0.0
 ip route 0.0.0.0 0.0.0.0 null 0
 ip route 10.0.0.0 255.0.0.0 209.9.9.1
-end
 
 Isp4:
-config t
-int lo 8
- ip add 8.8.8.8 255.255.255.255
+conf t
 router bgp 45
- bgp log-neighbor-changes
- neighbor 25.2.5.2 remote-as 2
- neighbor 35.3.5.3 remote-as 3
- neighbor 45.4.5.4 remote-as 45
- network 8.8.8.8 mask 255.255.255.255
- network 55.55.55.55 mask 255.255.255.255
- network 25.2.5.0 mask 255.255.255.0
- network 35.3.5.0 mask 255.255.255.0
- network 45.4.5.0 mask 255.255.255.0
+bgp log-neighbor-changes
+neighbor 45.4.5.4 remote-as 45
+neighbor 35.3.5.3 remote-as 3
+neighbor 25.2.5.2 remote-as 2
+network 45.4.5.0 mask 255.255.255.0
+network 35.3.5.0 mask 255.255.255.0
+network 25.2.5.0 mask 255.255.255.0
+network 8.8.8.8 mask 255.255.255.255
 end
 
 TASK4: WHY OSPF AND BGP ARE BEST FRIENDS, SOULMATE, LOVERS, FUCKBUDDY, MU, FOREVER, LIFETIME, COMMITED
@@ -464,5 +462,6 @@ Howt to configure Site 2 site VPN JP to PH:
 https://
 
 TASK6: FUndamentals of Cisco network Security:
+
 
 
